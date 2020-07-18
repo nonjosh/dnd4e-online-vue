@@ -1,0 +1,31 @@
+version: '3.7'
+
+# volumes:
+#    pg-data:
+
+services:
+    db:
+        image: postgres:13-alpine
+        restart: always
+        user: 1000:1000
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /var/lib/postgresql/data/pg-data
+        ports:
+        - "25432:5432"
+        volumes:
+        - ./db/DB_DATA:/var/lib/postgresql/data
+        - ./db/sql:/docker-entrypoint-initdb.d
+    node:
+        container_name: dnd4e-node
+        image: node:14.4.0
+        depends_on:
+        - db
+        volumes:
+        - ./node:/app
+        working_dir: /app
+        ports: 
+        - 2080:8080
+        command:
+          bash /app/init.sh
