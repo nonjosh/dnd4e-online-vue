@@ -1,10 +1,3 @@
-# frontend
+# DnD4e Online
 
-```sh
-docker run -it --rm --name temp_node \
--v $PWD/node:/app \
--u 1000:1000 \
--p 1080:8080 nonjosh/vue-cli bash
-
-docker-compose run node
-```
+Simple webpage for playing DnD4e with my friends
