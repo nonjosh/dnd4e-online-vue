@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   props: {
@@ -21,28 +21,31 @@ export default {
     return {
       input: null,
       // card_name: "Conductive Defense",
-      // card_url: "http://www.funin.space/compendium/power/Flame-Spiral.html",
-    }
+      // card_url: "http://data.dnd.nonjosh.info/compendium/power/Flame-Spiral.html",
+    };
   },
   created() {
-    this.loadFile()
+    this.loadFile();
   },
   methods: {
     loadFile() {
-      var url = '../../compendium/power/' + this.titleCase(this.card_name) + ".html";
-       axios({
+      var url =
+        "http://data.dnd.nonjosh.info/compendium/power/" + this.titleCase(this.card_name) + ".html";
+      axios({
         method: "get",
         // url: this.card_url
-        url: url,
-      })
-      .then(result => {
+        url: url
+      }).then(result => {
         this.input = result.data;
-        this.input = this.input.replace(/Charisma modifier/, "Charisma modifier (+5)")
+        this.input = this.input.replace(
+          /Charisma modifier/,
+          "Charisma modifier (+5)"
+        );
         // console.log("Data: " + result.data)
-      })
-        // .catch(error => {
-        //   console.error("error getting file");
-        // });
+      });
+      // .catch(error => {
+      //   console.error("error getting file");
+      // });
     },
     titleCase(str) {
       var wordsArray = str.toLowerCase().split(/\s+/);
@@ -54,16 +57,15 @@ export default {
   },
   computed: {
     refresh: function() {
-      this.loadFile()
+      this.loadFile();
       return null;
-    },
+    }
   }
-
 };
 </script>
 
 <style lang="scss">
-@import 'http://www.funin.space/compendium/power/styles/detail.css';
+@import "http://data.dnd.nonjosh.com/compendium/power/styles/detail.css";
 
 div.power-card {
   // height: 600px;
@@ -73,7 +75,7 @@ div.power-card {
   // border: black solid 1px;
 }
 
-.button {  
+.button {
   text-align: center;
   margin: 5px;
 }
@@ -84,6 +86,6 @@ div.power-card #detail {
 #overlay {
   display: none;
   background-color: gray;
-  opacity: .8;
+  opacity: 0.8;
 }
 </style>
