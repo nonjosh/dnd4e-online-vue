@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "node-fetch": "^2.6.1",
+    "node-forge": "0.10.0",
     "rpg-dice-roller": "^4.1.1",
     "socket.io-client": "^2.3.0",
     "v-tooltip": "^2.0.3",
