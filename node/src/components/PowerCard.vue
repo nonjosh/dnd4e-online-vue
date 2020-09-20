@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "http://data.dnd.nonjosh.com/compendium/power/styles/detail.css";
+@import "http://data.dnd.nonjosh.info/compendium/power/styles/detail.css";
 
 div.power-card {
   // height: 600px;
