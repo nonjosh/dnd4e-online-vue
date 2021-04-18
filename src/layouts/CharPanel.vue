@@ -16,7 +16,12 @@
         </div>
         <div class="item-list">
             <h3>Items</h3>
-            <div v-for="(item, item_name, index) in char_items" :key="index"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div>
+            <h4>Equipped</h4>
+            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.equip == 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+            <h4>Consumables</h4>
+            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.count > 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+            <h4>Others</h4>
+            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.count == 1 && item.equip == 0"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
         </div>
         <div class="resultview">
             <iframe name="result"></iframe>
@@ -57,7 +62,7 @@ export default {
             this.char_name = char_json.D20Character.CharacterSheet[0].Details[0].name[0];
 
             // render char stat
-            let char_stat = char_json.D20Character.CharacterSheet[0].StatBlock[0].Stat;
+            const char_stat = char_json.D20Character.CharacterSheet[0].StatBlock[0].Stat;
             char_stat.forEach((stat_obj) => {
                 const stat_obj_name = stat_obj.alias[0].$.name;
                 const stat_obj_value = stat_obj.$.value;
@@ -70,7 +75,7 @@ export default {
             });
 
             // feat list\
-            var RulesElementTally = char_json.D20Character.CharacterSheet[0].RulesElementTally[0].RulesElement;
+            const RulesElementTally = char_json.D20Character.CharacterSheet[0].RulesElementTally[0].RulesElement;
             RulesElementTally.forEach(RulesElement => {
                 var element_type = RulesElement.$.type;
                 if (element_type == 'Feat') {
@@ -85,16 +90,12 @@ export default {
 
             // render power list
             const char_powers = char_json.D20Character.CharacterSheet[0].PowerStats[0].Power;
-            char_powers.forEach((power_obj) => {        
-                let power_name = power_obj.$.name;
-                let power_use = power_obj.specific[0]._;
-                let power_action = power_obj.specific[1]._;
-                
+            char_powers.forEach((power_obj) => {                        
                 let power = {};
-                power.name = power_name;
-                power.use = power_use;
-                power.action = power_action;
-                power.url = "http://data.dnd.nonjosh.com/compendium/power/" + power_name.replaceAll(" ", "-").replaceAll("'", "") + ".html";
+                power.name = power_obj.$.name;
+                power.use = power_obj.specific[0]._;
+                power.action = power_obj.specific[1]._;
+                power.url = "http://data.dnd.nonjosh.com/compendium/power/" + power.name.replaceAll(" ", "-").replaceAll("'", "") + ".html";
                 this.char_powers.push(power);
             });
             
