@@ -1,27 +1,28 @@
 <template>
     <div class="char-panel">
-        <meta charset="utf-8">
         <div><h2>{{char_name}}</h2></div>
-        <!-- <div class="stat-list">
-            <h3>Stat</h3>
-            <div v-for="stat in char_stat" :key="stat.name">{{stat.name}}: {{stat.value}}</div>
-        </div> -->
-        <div class="feat-list">
-            <h3>Feats</h3>
-            <div v-for="feat in char_feats" :key="feat.name"><a v-bind:href=feat.url target="result">{{feat.name}}</a></div>
-        </div>
-        <div class="power-list">
-            <h3>Powers</h3>
-            <div v-for="power in char_powers" :key="power.name"><a v-bind:href=power.url target="result">{{power.name}}</a></div>
-        </div>
-        <div class="item-list">
-            <h3>Items</h3>
-            <h4>Equipped</h4>
-            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.equip == 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
-            <h4>Consumables</h4>
-            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.count > 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
-            <h4>Others</h4>
-            <div v-for="(item, item_name, index) in char_items" :key="index"><div v-if="item.count == 1 && item.equip == 0"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+        <div class="detail-list">
+            <!-- <div class="stat-list">
+                <h3>Stat</h3>
+                <div v-for="stat in char_stat" :key="stat.name">{{stat.name}}: {{stat.value}}</div>
+            </div> -->
+            <div class="feat-list">
+                <h3>Feats</h3>
+                <div v-for="feat in char_feats" :key="feat.name"><a v-bind:href=feat.url target="result">{{feat.name}}</a></div>
+            </div>
+            <div class="power-list">
+                <h3>Powers</h3>
+                <div v-for="power in char_powers" :key="power.name"><a v-bind:href=power.url target="result">{{power.name}}</a></div>
+            </div>
+            <div class="item-list">
+                <h3>Items</h3>
+                <h4>Equipped</h4>
+                <div v-for="(item, item_name, index) in char_items" :key="'E'+index"><div v-if="item.equip == 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+                <h4>Consumables</h4>
+                <div v-for="(item, item_name, index) in char_items" :key="'C'+index"><div v-if="item.count > 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+                <h4>Others</h4>
+                <div v-for="(item, item_name, index) in char_items" :key="'O'+index"><div v-if="item.count == 1 && item.equip == 0"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+            </div>
         </div>
         <div class="resultview">
             <iframe name="result"></iframe>
@@ -146,20 +147,35 @@ export default {
                     }
                 }
             })
+            // this.char_items = ItemList;
+             // Getting the keys of JavaScript Object.
+            this.char_items = Object.keys(ItemList) 
 
-            this.char_items = ItemList;
-            // console.log(this.char_items);
+            // Sort and calling a method on
+            // keys on sorted fashion.
+            .sort().reduce(function(Obj, key) {                       
+                // Adding the key-value pair to the
+                // new object in sorted keys manner
+                Obj[key] = ItemList[key]; 
+                return Obj; 
+            }, {});
         })
         .catch(err => {
             // Manage the state of the application if the request 
             // has failed
             console.log(err);
         })
-    }
+    },
 }
 </script>
 
 <style>
+.detail-list {
+    width: 40vw;
+    height: 80vh;
+    float: left;
+    overflow: scroll;
+}
 .feat-list {
     float: left;
 }
