@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/typescript-node
+{
+	"name": "Node.js & TypeScript",
+	"build": {
+		"dockerfile": "Dockerfile",
+		// Update 'VARIANT' to pick a Node version: 12, 14, 16
+		"args": { 
+			"VARIANT": "16"
+		}
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.profile.linux": "/bin/bash"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"eamodio.gitlens",
+		"donjayamanne.githistory",
+		"ms-azuretools.vscode-docker",
+		"oderwat.indent-rainbow",
+		"Gruntfuggly.todo-tree",
+		"2gua.rainbow-brackets",
+		"octref.vetur",
+		"mohsen1.prettify-json",
+		"jcbuisson.vue",
+		"usernamehw.errorlens",
+		"formulahendry.auto-rename-tag",
+		"formulahendry.auto-close-tag",
+		"esbenp.prettier-vscode",
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [2080],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "yarn install",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "node"
+}
