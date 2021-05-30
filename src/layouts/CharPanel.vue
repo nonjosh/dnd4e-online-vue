@@ -174,7 +174,7 @@ export default {
     width: 40vw;
     height: 80vh;
     float: left;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 .feat-list {
     float: left;
