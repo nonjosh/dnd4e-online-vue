@@ -17,11 +17,11 @@
             <div class="item-list">
                 <h3>Items</h3>
                 <h4>Equipped</h4>
-                <div v-for="(item, item_name, index) in char_items" :key="'E'+index"><div v-if="item.equip == 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+                <div v-for="(item, index) in char_items" :key="'E'+index"><div v-if="item.equip == 1"><a v-bind:href=item.url target="result">{{item.name}}</a> *{{item.count}}</div></div>
                 <h4>Consumables</h4>
-                <div v-for="(item, item_name, index) in char_items" :key="'C'+index"><div v-if="item.count > 1"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+                <div v-for="(item, index) in char_items" :key="'C'+index"><div v-if="item.count > 1"><a v-bind:href=item.url target="result">{{item.name}}</a> *{{item.count}}</div></div>
                 <h4>Others</h4>
-                <div v-for="(item, item_name, index) in char_items" :key="'O'+index"><div v-if="item.count == 1 && item.equip == 0"><a v-bind:href=item.url target="result">{{item_name}}</a> *{{item.count}}</div></div>
+                <div v-for="(item, index) in char_items" :key="'O'+index"><div v-if="item.count == 1 && item.equip == 0"><a v-bind:href=item.url target="result">{{item.name}}</a> *{{item.count}}</div></div>
             </div>
         </div>
         <div class="resultview">
@@ -101,64 +101,26 @@ export default {
             });
             
 
-            // render item List
-            var LevelArray = char_json.D20Character.Level;
+            // render item list
+            const LootTally = char_json.D20Character.CharacterSheet[0].LootTally[0].loot;
+            LootTally.forEach(lootObj => {
+                // console.log(lootObj);
+                var item = {};
+                const RulesElement = lootObj.RulesElement[0];
+                item.name = RulesElement.$["name"];
+                
+                item.count = parseInt(lootObj.$.count);
+                
+                item.equip = (lootObj.$['equip-count'] == "1");
+                var url = item.name.replace(/ \(heroic tier\)| \(paragon tier\)| \(epic tier\)/, "");
+                if (url.lastIndexOf(' (level') > -1) {url = url.substring(0, url.lastIndexOf(' (level'));}
+                url = url.replace(/ \+1| \+2| \+3| \+4| \+5| \+6|/g, "");
+                url = url.replaceAll(" ", "-").replaceAll("'", "");
+                url = url.replaceAll(/\(|\)/g, "");
+                item.url = "http://data.dnd.nonjosh.com/compendium/item/" + url + ".html";
 
-            var ItemList = {};
-
-            LevelArray.forEach((Level) => {
-                if (Level.loot !== undefined) {
-                    try {
-                        var lootArray = Level.loot;
-                        lootArray.forEach((loot) =>{
-                            var lootElement = loot.RulesElement;
-                            var lootName = lootElement[lootElement.length - 1].$.name;
-                            var lootCount = loot.$.count;
-                            var loottype = lootElement[lootElement.length - 1].$.type;
-                            var lootEquip = loot.$["equip-count"];
-                            if (loottype === "Magic Item") {
-                                if (ItemList[lootName] !== undefined) {
-                                    ItemList[lootName].count += parseInt(lootCount);
-                                } else {
-                                    ItemList[lootName] = {};
-                                    ItemList[lootName].count = parseInt(lootCount);
-                                    if (lootElement[lootElement.length - 1].$["internal-id"].includes("CONSUMABLE")) {
-                                        ItemList[lootName].type = "CONSUMABLE";
-                                    } else {
-                                        ItemList[lootName].type = "MAGIC_ITEM";
-                                    }
-                                    var url = lootName.replace(/ \(heroic tier\)| \(paragon tier\)| \(epic tier\)/, "");
-                                    if (url.lastIndexOf(' (level') > -1) {url = url.substring(0, url.lastIndexOf(' (level'));}
-                                    url = url.replace(/ \+1| \+2| \+3| \+4| \+5| \+6|/g, "");
-                                    url = url.replaceAll(" ", "-").replaceAll("'", "");
-                                    url = url.replaceAll(/\(|\)/g, "");
-                                    ItemList[lootName].url = "http://data.dnd.nonjosh.com/compendium/item/" + url + ".html";
-                                }
-                                ItemList[lootName].equip = parseInt(lootEquip);
-                                if (ItemList[lootName].count == 0) {
-                                    delete ItemList[lootName];
-                                }
-                            }
-                        })
-                    } catch(err) {
-                        console.log("An error occurred");
-                        console.log(lootArray);
-                        console.log(err);
-                    }
-                }
-            })
-            // this.char_items = ItemList;
-             // Getting the keys of JavaScript Object.
-            this.char_items = Object.keys(ItemList) 
-
-            // Sort and calling a method on
-            // keys on sorted fashion.
-            .sort().reduce(function(Obj, key) {                       
-                // Adding the key-value pair to the
-                // new object in sorted keys manner
-                Obj[key] = ItemList[key]; 
-                return Obj; 
-            }, {});
+                this.char_items.push(item);
+            });
         })
         .catch(err => {
             // Manage the state of the application if the request 
