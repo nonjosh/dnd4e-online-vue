@@ -153,7 +153,7 @@ export default {
     float: left;
 }
 iframe {
-    width: 100%;
+    width: 590px;
     height: 100%;
 }
 </style>
