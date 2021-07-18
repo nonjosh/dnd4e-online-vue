@@ -149,21 +149,23 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .detail-list {
     width: 20vw;
     height: 80vh;
     float: left;
-}
-.feat-list {
-    float: left;
-    text-align: left;
-    padding-right: 10px;
-}
-.power-list {
-    float: left;
-    text-align: left;
-    padding-right: 10px;
+    overflow-y: scroll;
+
+    .feat-list {
+        float: left;
+        text-align: left;
+        padding-right: 10px;
+    }
+    .power-list {
+        float: left;
+        text-align: left;
+        padding-right: 10px;
+    }
 }
 .item-list {
     width: 20vw;
