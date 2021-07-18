@@ -108,6 +108,12 @@ export default {
                 var item = {};
                 const RulesElement = lootObj.RulesElement[0];
                 item.name = RulesElement.$["name"];
+
+                const adv_gear = ["Adventurer's Kit", "Climber's Kit", "Thieves' Tools", "Tent", "Fire Kit", "Torch", "Common Meal", "Alchemical Reagents (Arcana)"];
+                if (adv_gear.includes(item.name)) {return;}
+
+                const item_groups = ["Spear", "Greatspear", "Wyrmsilk Armor", "Spidersilk Armor", "Dragoncloth Armor"];
+                if (item_groups.includes(item.name)) {return;}
                 
                 item.count = parseInt(lootObj.$.count);
                 
