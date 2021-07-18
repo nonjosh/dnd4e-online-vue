@@ -241,7 +241,7 @@ export default {
     height: 80vh;
     float: left;
     text-align: left;
-    padding-right: 10px;
+    padding-left: 10px;
     overflow-y: scroll;
 }
 .resultview {
