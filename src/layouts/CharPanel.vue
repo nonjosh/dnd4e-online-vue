@@ -39,7 +39,7 @@ export default {
     data() {
         return {
             file_data: "",
-            char_url: "http://nonjosh.com/downloads/char/nonjoshiii.dnd4e",
+            char_url: "https://nonjosh.com/downloads/char/nonjoshiii.dnd4e",
             char_name: "",
             char_stat: [],
             char_feats: [],
