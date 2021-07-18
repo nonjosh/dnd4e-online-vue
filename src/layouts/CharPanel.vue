@@ -127,6 +127,18 @@ export default {
 
                 this.char_items.push(item);
             });
+            // sort item list
+            function compare( a, b ) {
+                if ( a.name < b.name ){
+                    return -1;
+                }
+                if ( a.name > b.name ){
+                    return 1;
+                }
+                return 0;
+            }
+            this.char_items.sort( compare );        
+
         })
         .catch(err => {
             // Manage the state of the application if the request 
