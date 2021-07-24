@@ -1,49 +1,72 @@
 <template>
   <div class="char-panel">
-    <div>
-      <h2>{{ char_name }}</h2>
-    </div>
+    <v-tabs>
+      <v-tab>{{ char_name }}</v-tab>
+    </v-tabs>
     <div class="detail-list">
-      <!-- <div class="stat-list">
-                <h3>Stat</h3>
-                <div v-for="stat in char_stat" :key="stat.name">{{stat.name}}: {{stat.value}}</div>
-            </div> -->
-      <div class="feat-list">
-        <h3>Feats</h3>
-        <div v-for="feat in char_feats" :key="feat.name">
-          <a v-bind:href="feat.url" target="result">{{ feat.name }}</a>
-        </div>
-      </div>
-      <div class="power-list">
-        <h3>Powers</h3>
-        <div v-for="power in char_powers" :key="power.name">
-          <a v-bind:href="power.url" target="result">{{ power.name }}</a>
-        </div>
-      </div>
-    </div>
-    <div class="item-list">
-      <h3>Items</h3>
-      <h4>Equipped</h4>
-      <div v-for="(item, index) in char_items" :key="'E' + index">
-        <div v-if="item.equip == 1">
-          <a v-bind:href="item.url" target="result">{{ item.name }}</a>
-          *{{ item.count }}
-        </div>
-      </div>
-      <h4>Consumables</h4>
-      <div v-for="(item, index) in char_items" :key="'C' + index">
-        <div v-if="item.count > 1">
-          <a v-bind:href="item.url" target="result">{{ item.name }}</a>
-          *{{ item.count }}
-        </div>
-      </div>
-      <h4>Others</h4>
-      <div v-for="(item, index) in char_items" :key="'O' + index">
-        <div v-if="item.count == 1 && item.equip == 0">
-          <a v-bind:href="item.url" target="result">{{ item.name }}</a>
-          *{{ item.count }}
-        </div>
-      </div>
+      <v-tabs v-model="tab">
+        <!-- <v-tab> Stat </v-tab> -->
+        <v-tab> Feats </v-tab>
+        <v-tab> Powers </v-tab>
+        <v-tab> Items </v-tab>
+      </v-tabs>
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="item in items" :key="item.tab">
+          <!-- <div v-if="item.tab == 'Stat'">
+            <div v-for="stat in char_stat" :key="stat.name">
+              {{ stat.name }}: {{ stat.value }}
+            </div>
+          </div> -->
+          <div v-if="item.tab == 'Feats'">
+            <div v-for="feat in char_feats" :key="feat.name">
+              <v-btn small block v-bind:href="feat.url" target="result">{{
+                feat.name
+              }}</v-btn>
+            </div>
+          </div>
+          <div v-if="item.tab == 'Powers'">
+            <div v-for="power in char_powers" :key="power.name">
+              <v-btn small block v-bind:href="power.url" target="result">{{
+                power.name
+              }}</v-btn>
+            </div>
+          </div>
+          <div v-if="item.tab == 'Items'">
+            <h4>Equipped</h4>
+            <v-divider></v-divider>
+            <div v-for="(item, index) in char_items" :key="'E' + index">
+              <div v-if="item.equip == 1">
+                <v-btn small v-bind:href="item.url" target="result">{{
+                  item.name
+                }}</v-btn>
+                *{{ item.count }}
+              </div>
+            </div>
+            <v-divider></v-divider>
+            <h4>Consumables</h4>
+            <v-divider></v-divider>
+            <div v-for="(item, index) in char_items" :key="'C' + index">
+              <div v-if="item.count > 1">
+                <v-btn small v-bind:href="item.url" target="result">{{
+                  item.name
+                }}</v-btn>
+                *{{ item.count }}
+              </div>
+            </div>
+            <v-divider></v-divider>
+            <h4>Others</h4>
+            <v-divider></v-divider>
+            <div v-for="(item, index) in char_items" :key="'O' + index">
+              <div v-if="item.count == 1 && item.equip == 0">
+                <v-btn small v-bind:href="item.url" target="result">{{
+                  item.name
+                }}</v-btn>
+                *{{ item.count }}
+              </div>
+            </div>
+          </div>
+        </v-tab-item>
+      </v-tabs-items>
     </div>
     <div class="resultview">
       <iframe name="result"></iframe>
@@ -66,6 +89,13 @@ export default {
       char_feats: [],
       char_powers: [],
       char_items: [],
+      tab: null,
+      items: [
+        // { tab: "Stat", content: "Stat Content" },
+        { tab: "Feats", content: "Feats Content" },
+        { tab: "Powers", content: "Powers Content" },
+        { tab: "Items", content: "Items Content" },
+      ],
     };
   },
   mounted() {
@@ -205,28 +235,9 @@ export default {
 
 <style lang="scss">
 .detail-list {
-  width: 20vw;
-  height: 80vh;
+  width: 30vw;
+  height: 95vh;
   float: left;
-  overflow-y: scroll;
-
-  .feat-list {
-    float: left;
-    text-align: left;
-    padding-right: 10px;
-  }
-  .power-list {
-    float: left;
-    text-align: left;
-    padding-right: 10px;
-  }
-}
-.item-list {
-  width: 20vw;
-  height: 80vh;
-  float: left;
-  text-align: left;
-  padding-left: 10px;
   overflow-y: scroll;
 }
 .resultview {
@@ -235,7 +246,11 @@ export default {
   float: left;
 }
 iframe {
-  width: 590px;
+  width: 32vw;
   height: 100%;
+}
+.v-btn,
+.v-tab {
+  text-transform: none;
 }
 </style>
