@@ -69,7 +69,7 @@
       </v-tabs-items>
     </div>
     <div class="resultview">
-      <iframe name="result"></iframe>
+      <iframe name="result" id="resultiframe"></iframe>
     </div>
   </div>
 </template>
@@ -242,11 +242,12 @@ export default {
 }
 .resultview {
   width: 40vw;
-  height: 80vh;
+  height: 95vh;
   float: left;
 }
-iframe {
+#resultiframe {
   width: 32vw;
+  min-width: 615px;
   height: 100%;
 }
 .v-btn,
