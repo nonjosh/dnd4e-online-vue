@@ -163,10 +163,37 @@ export default {
           power.name = power_obj.$.name;
           power.use = power_obj.specific[0]._;
           power.action = power_obj.specific[1]._;
-          power.url =
-            "http://data.dnd.nonjosh.com/compendium/power/" +
-            power.name.replaceAll(" ", "-").replaceAll("'", "") +
-            ".html";
+          switch (power.name) {
+            case "Melee Basic Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Basic-Attack.html";
+              break;
+            case "Ranged Basic Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Basic-Attack.html";
+              break;
+            case "Bull Rush Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Bull-Rush.html";
+              break;
+            case "Grab Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Grab.html";
+              break;
+            case "Opportunity Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Opportunity-Attack.html";
+              break;
+            case "Second Wind":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/glossary/Second-wind.html";
+              break;
+            default:
+              power.url =
+                "http://data.dnd.nonjosh.com/compendium/power/" +
+                power.name.replaceAll(" ", "-").replaceAll("'", "") +
+                ".html";
+          }
           this.char_powers.push(power);
         });
 
