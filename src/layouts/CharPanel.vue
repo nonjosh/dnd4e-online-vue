@@ -148,7 +148,7 @@ export default {
             );
             feat.url = feat.url.replaceAll(" ", "-").replaceAll("'", "");
             feat.url =
-              "http://data.dnd.nonjosh.com/compendium/feat/" +
+              "https://data.dnd.nonjosh.com/compendium/feat/" +
               feat.url +
               ".html";
             this.char_feats.push(feat);
@@ -190,7 +190,7 @@ export default {
               break;
             default:
               power.url =
-                "http://data.dnd.nonjosh.com/compendium/power/" +
+                "https://data.dnd.nonjosh.com/compendium/power/" +
                 power.name.replaceAll(" ", "-").replaceAll("'", "") +
                 ".html";
           }
@@ -235,7 +235,7 @@ export default {
           url = url.replaceAll(" ", "-").replaceAll("'", "");
           url = url.replaceAll(/\(|\)/g, "");
           item.url =
-            "http://data.dnd.nonjosh.com/compendium/item/" + url + ".html";
+            "https://data.dnd.nonjosh.com/compendium/item/" + url + ".html";
 
           this.char_items.push(item);
         });
