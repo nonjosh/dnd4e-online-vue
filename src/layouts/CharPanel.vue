@@ -1,8 +1,10 @@
 <template>
   <div class="char-panel">
-    <v-tabs>
-      <v-tab>{{ char_name }}</v-tab>
-    </v-tabs>
+    <v-toolbar>
+      <v-tabs>
+        <v-tab>{{ char_name }}</v-tab>
+      </v-tabs>
+    </v-toolbar>
     <div class="detail-list">
       <v-tabs v-model="tab">
         <!-- <v-tab> Stat </v-tab> -->
@@ -36,10 +38,9 @@
             <v-divider></v-divider>
             <div v-for="(item, index) in char_items" :key="'E' + index">
               <div v-if="item.equip == 1">
-                <v-btn small v-bind:href="item.url" target="result">{{
+                <v-btn small block v-bind:href="item.url" target="result">{{
                   item.name
                 }}</v-btn>
-                *{{ item.count }}
               </div>
             </div>
             <v-divider></v-divider>
@@ -47,10 +48,11 @@
             <v-divider></v-divider>
             <div v-for="(item, index) in char_items" :key="'C' + index">
               <div v-if="item.count > 1">
-                <v-btn small v-bind:href="item.url" target="result">{{
-                  item.name
-                }}</v-btn>
-                *{{ item.count }}
+                <v-btn small block v-bind:href="item.url" target="result">
+                  <v-badge inline v-bind:content="item.count"
+                    >{{ item.name }}
+                  </v-badge></v-btn
+                >
               </div>
             </div>
             <v-divider></v-divider>
@@ -58,10 +60,9 @@
             <v-divider></v-divider>
             <div v-for="(item, index) in char_items" :key="'O' + index">
               <div v-if="item.count == 1 && item.equip == 0">
-                <v-btn small v-bind:href="item.url" target="result">{{
-                  item.name
-                }}</v-btn>
-                *{{ item.count }}
+                <v-btn small block v-bind:href="item.url" target="result">
+                  {{ item.name }}</v-btn
+                >
               </div>
             </div>
           </div>
@@ -187,6 +188,10 @@ export default {
             case "Second Wind":
               power.url =
                 "https://data.dnd.nonjosh.com/compendium/glossary/Second-wind.html";
+              break;
+            case "Refire the Forge Attack":
+              power.url =
+                "https://data.dnd.nonjosh.com/compendium/power/Refire-the-Forge.html";
               break;
             default:
               power.url =
