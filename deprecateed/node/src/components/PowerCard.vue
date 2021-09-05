@@ -15,13 +15,13 @@ import axios from "axios";
 
 export default {
   props: {
-    card_name: String
+    card_name: String,
   },
   data() {
     return {
       input: null,
       // card_name: "Conductive Defense",
-      // card_url: "http://data.dnd.nonjosh.info/compendium/power/Flame-Spiral.html",
+      // card_url: "https://data.dnd.nonjosh.info/compendium/power/Flame-Spiral.html",
     };
   },
   created() {
@@ -30,12 +30,14 @@ export default {
   methods: {
     loadFile() {
       var url =
-        "http://data.dnd.nonjosh.info/compendium/power/" + this.titleCase(this.card_name) + ".html";
+        "https://data.dnd.nonjosh.com/compendium/power/" +
+        this.titleCase(this.card_name) +
+        ".html";
       axios({
         method: "get",
         // url: this.card_url
-        url: url
-      }).then(result => {
+        url: url,
+      }).then((result) => {
         this.input = result.data;
         this.input = this.input.replace(
           /Charisma modifier/,
@@ -49,23 +51,23 @@ export default {
     },
     titleCase(str) {
       var wordsArray = str.toLowerCase().split(/\s+/);
-      var upperCased = wordsArray.map(function(word) {
+      var upperCased = wordsArray.map(function (word) {
         return word.charAt(0).toUpperCase() + word.substr(1);
       });
       return upperCased.join("-");
-    }
+    },
   },
   computed: {
-    refresh: function() {
+    refresh: function () {
       this.loadFile();
       return null;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "http://data.dnd.nonjosh.info/compendium/power/styles/detail.css";
+@import "https://data.dnd.nonjosh.com/compendium/power/styles/detail.css";
 
 div.power-card {
   // height: 600px;
